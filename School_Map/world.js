@@ -16,7 +16,9 @@ class world extends Phaser.Scene {
     this.load.image("SchoolImg", "assets/tilests32x32.png");
     this.load.image("ToiletStallImg","assets/toiletstall.png")
     this.load.spritesheet('Sunako', 'assets/Sunako.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('boxcutter', 'assets/boxcutter.png', { frameWidth: 32, frameHeight: 32 });
 
+    //this.load.audio("gamebgm","assets/Gamebgm.mp3")
 
    
 
@@ -24,6 +26,7 @@ class world extends Phaser.Scene {
 
   create() {
     console.log("*** world scene");
+    // this.bgMusic = this.sound.add("gamebgm", {loop: true}).setVolume(0.2)
 
     //Step 3 - Create the map from main
    
@@ -93,7 +96,17 @@ this.anims.create({
   repeat: -1
 });
 
+/////////box cutter ANI//////////
+this.anims.create({
+  key: 'ani',
+  frames: this.anims.generateFrameNumbers('boxcutter', { start: 0, end: 1 }),
+  frameRate: 3,
+  repeat: -1
+});
+
 this.player = this.physics.add.sprite(startPoint.x, startPoint.y, 'Sunako').play("front")
+this.boxcutter = this.physics.add.sprite(405, 321, "boxcutter").play("ani")
+
 this.player.setCollideWorldBounds(true);
 this.player.body.setSize(this.player.width*0.7,this.player.height*0.9)
 
@@ -102,30 +115,21 @@ window.player = this.player
 this.LayoutLayer.setCollisionByExclusion(-1, true)
 this.FloorWallLayer.setCollisionByProperty({ wall : true }) 
 this.StallLayer.setCollisionByProperty({ toilet : true }) 
-this.ItemLayer.setCollisionByExclusion(-1, true)
+this.ItemLayer.setCollisionByProperty({ item : true }) 
 
 this.physics.add.collider(this.ItemLayer, this.player)
 this.physics.add.collider(this.StallLayer, this.player)
 this.physics.add.collider(this.FloorWallLayer, this.player)
 this.physics.add.collider(this.LayoutLayer, this.player)
 
+this.physics.add.overlap(this.player,this.boxcutter, this.collectBoxcutter, null, this);
+
 this.cursors = this.input.keyboard.createCursorKeys();
+this.cameras.main.startFollow(this.player);
 
-    // Add time event / movement here
 
-    // get the tileIndex number in json, +1
-    //mapLayer.setTileIndexCallback(11, this.room1, this);
 
-    // Add custom properties in Tiled called "mouintain" as bool
-
-    // What will collider witg what layers
-    //this.physics.add.collider(mapLayer, this.player);
-
-    // create the arrow keys
-    //this.cursors = this.input.keyboard.createCursorKeys();
-
-    // camera follow player
-    //this.cameras.main.startFollow(this.player);
+ 
   } /////////////////// end of create //////////////////////////////
 
   update() {
@@ -162,8 +166,21 @@ this.cursors = this.input.keyboard.createCursorKeys();
   //Function to jump to room1
   room1(player,tile) {
     console.log("room1 function");
-    this.scene.start("room1")
+
+     let playerPos={}
+  playerPos.x=45
+  playerPos.y=267
+  playerPos.facing="right"
+  this.scene.start("room1",{player:playerPos})
+}
+
+//////function to collect item/////
+collectBoxcutter (player, boxcutter)
+    {
+        boxcutter.disableBody(true, true);
+    }
+
 
   }
 
-} //////////// end of class world ////////////////////////
+//////////// end of class world /////////////////////

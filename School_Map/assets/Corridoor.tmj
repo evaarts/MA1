@@ -8,7 +8,7 @@
             255, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 257, 2, 2, 2, 2,
             255, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 257, 2, 2, 2, 2,
             255, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 257, 2, 2, 2, 2,
-            255, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 257, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
             2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
             2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
             2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
@@ -81,6 +81,18 @@
                  "width":0,
                  "x":17,
                  "y":272
+                }, 
+                {
+                 "class":"",
+                 "height":0,
+                 "id":2,
+                 "name":"back",
+                 "point":true,
+                 "rotation":0,
+                 "visible":true,
+                 "width":0,
+                 "x":1218,
+                 "y":308
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -89,7 +101,7 @@
          "y":0
         }],
  "nextlayerid":5,
- "nextobjectid":2,
+ "nextobjectid":3,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.9.2",
@@ -105,6 +117,155 @@
          "name":"tilests32x32",
          "spacing":0,
          "tilecount":1100,
+         "tileheight":32,
+         "tiles":[
+                {
+                 "id":38,
+                 "properties":[
+                        {
+                         "name":"object",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":39,
+                 "properties":[
+                        {
+                         "name":"object",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":254,
+                 "properties":[
+                        {
+                         "name":"wall",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":255,
+                 "properties":[
+                        {
+                         "name":"wall",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":256,
+                 "properties":[
+                        {
+                         "name":"wall",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":346,
+                 "properties":[
+                        {
+                         "name":"object",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":850,
+                 "properties":[
+                        {
+                         "name":"stair",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":851,
+                 "properties":[
+                        {
+                         "name":"stair",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":852,
+                 "properties":[
+                        {
+                         "name":"stair",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":973,
+                 "properties":[
+                        {
+                         "name":"shelf",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":974,
+                 "properties":[
+                        {
+                         "name":"shelf",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":975,
+                 "properties":[
+                        {
+                         "name":"shelf",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":1023,
+                 "properties":[
+                        {
+                         "name":"shelf",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":1024,
+                 "properties":[
+                        {
+                         "name":"shelf",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":1025,
+                 "properties":[
+                        {
+                         "name":"shelf",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }],
+         "tilewidth":32
+        }, 
+        {
+         "columns":8,
+         "firstgid":1101,
+         "image":"school_tileset.png",
+         "imageheight":1408,
+         "imagewidth":256,
+         "margin":0,
+         "name":"school_tileset",
+         "spacing":0,
+         "tilecount":352,
          "tileheight":32,
          "tilewidth":32
         }],

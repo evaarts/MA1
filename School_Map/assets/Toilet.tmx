@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="2">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="3">
  <editorsettings>
   <export target="Toilet.tmj" format="json"/>
  </editorsettings>
@@ -145,41 +145,6 @@
     <property name="toilet" type="bool" value="true"/>
    </properties>
   </tile>
-  <tile id="128">
-   <properties>
-    <property name="toilet" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="129">
-   <properties>
-    <property name="toilet" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="130">
-   <properties>
-    <property name="toilet" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="131">
-   <properties>
-    <property name="toilet" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="132">
-   <properties>
-    <property name="toilet" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="133">
-   <properties>
-    <property name="toilet" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="134">
-   <properties>
-    <property name="toilet" type="bool" value="true"/>
-   </properties>
-  </tile>
  </tileset>
  <tileset firstgid="1025" name="dirt" tilewidth="32" tileheight="32" tilecount="1024" columns="32">
   <image source="Dirt.png" width="1024" height="1024"/>
@@ -197,11 +162,6 @@
    </properties>
   </tile>
   <tile id="94">
-   <properties>
-    <property name="item" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="144">
    <properties>
     <property name="item" type="bool" value="true"/>
    </properties>
@@ -227,16 +187,6 @@
    </properties>
   </tile>
   <tile id="343">
-   <properties>
-    <property name="item" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="344">
-   <properties>
-    <property name="item" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="345">
    <properties>
     <property name="item" type="bool" value="true"/>
    </properties>
@@ -458,7 +408,7 @@
 </data>
  </layer>
  <objectgroup id="7" name="objectLayer">
-  <object id="1" name="start" x="837" y="336">
+  <object id="2" name="start" x="831.936" y="304.349">
    <point/>
   </object>
  </objectgroup>
