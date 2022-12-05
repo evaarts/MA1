@@ -20,10 +20,14 @@ class classroom3_lv2 extends Phaser.Scene {
     this.load.image("SchoolImg", "assets/tilests32x32.png");
     this.load.image("ClassroomImg", "assets/school_tileset.png");
     this.load.spritesheet('paper', 'assets/paper.png', { frameWidth: 32, frameHeight: 32 });
+    this.load.image("tint","assets/tint.jpg");
+    this.load.audio("paper", 'assets/paper.mp3');
+    this.load.spritesheet('monster', 'assets/monster.png', { frameWidth: 128, frameHeight: 64 });
     }
 
     create() {
         console.log('*** classroom3_lv2 scene');
+        this.paperSnd = this.sound.add('paper');
 
         //Step 3 - Create the map from main
         let map = this.make.tilemap({ key: "classroom3_lv2" })
@@ -49,18 +53,34 @@ this.anims.create({
   repeat: -1
 });
 
+     ////monster ani////
+     this.anims.create({
+      key: 'right_m',
+      frames: this.anims.generateFrameNumbers('monster', { start: 3, end: 5 }),
+      frameRate: 6,
+      repeat: -1
+  });
+
         //Object layers
          var startPoint = map.findObject("ObjectLayer",(obj) => obj.name === "start");
 
+         this.monster = this.physics.add.sprite(168, 284, "monster").play("right_m")
          this.player = this.physics.add.sprite(startPoint.x, startPoint.y, 'Sunako').play("back")
-         this.paper = this.physics.add.sprite(352, 387, "paper").play("aniPaper")
+         this.paper = this.physics.add.sprite(386, 387, "paper").play("aniPaper")
 
          this.player.setCollideWorldBounds(true);
          this.player.body.setSize(this.player.width*0.7,this.player.height*0.9)
          
          window.player = this.player
 
-       
+         this.physics.add.overlap(this.player,this.monster,this.overlap,null,this)
+
+         this.time.addEvent({
+          delay: 0,
+          callback: this.moveRightLeft,
+          callbackScope: this,
+          loop: false,
+       });
         
         /////collider
         this.LayoutLayer.setCollisionByExclusion(-1, true)
@@ -80,7 +100,9 @@ this.anims.create({
          this.cursors = this.input.keyboard.createCursorKeys();
          this.cameras.main.startFollow(this.player);
 
-        
+         const image = this.add.image(0,0, "tint").setScale(1000);
+         image.setAlpha(0.6)
+         
     }
 
     update() {
@@ -126,7 +148,39 @@ hallway2(player,tile) {
       //////function to collect item/////
 collectPaper (player, paper)
 {
+  window.paper ++
+  this.paperSnd.play();
     paper.disableBody(true, true);
+}
+
+//////enemy left right/////
+moveRightLeft() {
+  console.log("moveRightLeft")
+  this.tweens.timeline({
+    targets: this.monster,
+    ease:"Linear",
+    loop: -1,
+    duration: 3000,
+    tweens: [
+      {
+        x:818,
+      },
+      {
+        x:168,
+      },
+    ],
+  });
+}
+
+ /////gameover////
+ overlap(){
+  console.log("monster touch player")
+  window.bgmSnd1.stop();
+  window.paper= 0
+  window.key= 0
+  this.cameras.main.shake(100)
+  this.scene.start("gameover")
+
 }
 
 

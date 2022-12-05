@@ -10,28 +10,24 @@ class main extends Phaser.Scene {
 
     preload() {
         this.load.image("main", "assets/mainPage.png")
-      
 
         // Preload all the assets here
 
         // Preload any images here
 
         // Preload any sound and music here
-        // this.load.audio('ping', 'assets/ping.mp3');
-        // this.load.audio('bgMusic', 'assets/bgMusic.mp3');
+       
+
+        this.load.audio("menu", 'assets/Menubgm.mp3');
     }
 
     create() {
 
         console.log('*** main scene');
 
-        // Add any sound and music here
-        // ( 0 = mute to 1 is loudest )
-        //this.music = this.sound.add('bgMusic').setVolume(0.3) // 10% volume
-
-        //this.music.play()
-        //window.music = this.music
-
+        window.bgmSnd = this.sound.add("menu", {loop: true}).setVolume(0.5)
+        window.bgmSnd.play();
+        window.bgmSnd.loop = true;
 
         // Add image and detect spacebar keypress
         this.add.image(0, 0, 'main').setOrigin(0, 0);
@@ -41,14 +37,10 @@ class main extends Phaser.Scene {
 
         // On spacebar event, call the world scene        
         spaceDown.on('down', function () {
-            console.log('Jump to Introduction scene');
-
-            this.scene.start('Introduction',
-                // Optional parameters
-                {
-
-                }
-            );
+            console.log('Jump to story1 scene');
+         
+            this.scene.start('story1',);
+    
         }, this);
 
 

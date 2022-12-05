@@ -10,6 +10,7 @@ class ending extends Phaser.Scene {
 
     preload() {
         this.load.image("ending", "assets/ending.jpg")
+        this.load.audio("endingbgm", 'assets/ending.mp3');
       
 
         // Preload all the assets here
@@ -25,12 +26,11 @@ class ending extends Phaser.Scene {
 
         console.log('*** ending scene');
 
-        // Add any sound and music here
-        // ( 0 = mute to 1 is loudest )
-        //this.music = this.sound.add('bgMusic').setVolume(0.3) // 10% volume
+    
+        window.bgmSnd2 = this.sound.add("endingbgm", {loop: true}).setVolume(0.5)
+        window.bgmSnd2.play();
+        window.bgmSnd2.loop = true;
 
-        //this.music.play()
-        //window.music = this.music
 
 
         // Add image and detect spacebar keypress
@@ -42,7 +42,7 @@ class ending extends Phaser.Scene {
         // On spacebar event, call the world scene        
         spaceDown.on('down', function () {
             console.log('Jump to main scene');
-
+            window.bgmSnd2.stop();
             this.scene.start('main',
                 // Optional parameters
                 {
@@ -50,12 +50,6 @@ class ending extends Phaser.Scene {
                 }
             );
         }, this);
-
-
-        this.add.text(90, 850, 'Press spacebar to menu screen', {
-            font: '30px Courier',
-            fill: '#FFFFFF'
-        });
 
 
         // Create all the game animations here

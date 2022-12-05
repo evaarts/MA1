@@ -15,8 +15,12 @@ class world extends Phaser.Scene {
     this.load.image("DirtImg", "assets/Dirt.png");
     this.load.image("SchoolImg", "assets/tilests32x32.png");
     this.load.image("ToiletStallImg","assets/toiletstall.png")
+
     this.load.spritesheet('Sunako', 'assets/Sunako.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('boxcutter', 'assets/boxcutter.png', { frameWidth: 32, frameHeight: 32 });
+    this.load.image("tint","assets/tint.jpg");
+
+  
+
 
     //this.load.audio("gamebgm","assets/Gamebgm.mp3")
 
@@ -96,21 +100,18 @@ this.anims.create({
   repeat: -1
 });
 
-/////////box cutter ANI//////////
-this.anims.create({
-  key: 'ani',
-  frames: this.anims.generateFrameNumbers('boxcutter', { start: 0, end: 1 }),
-  frameRate: 3,
-  repeat: -1
-});
+
 
 this.player = this.physics.add.sprite(startPoint.x, startPoint.y, 'Sunako').play("front")
-this.boxcutter = this.physics.add.sprite(405, 321, "boxcutter").play("ani")
+
 
 this.player.setCollideWorldBounds(true);
 this.player.body.setSize(this.player.width*0.7,this.player.height*0.9)
 
 window.player = this.player
+
+
+
 
 this.LayoutLayer.setCollisionByExclusion(-1, true)
 this.FloorWallLayer.setCollisionByProperty({ wall : true }) 
@@ -122,17 +123,36 @@ this.physics.add.collider(this.StallLayer, this.player)
 this.physics.add.collider(this.FloorWallLayer, this.player)
 this.physics.add.collider(this.LayoutLayer, this.player)
 
-this.physics.add.overlap(this.player,this.boxcutter, this.collectBoxcutter, null, this);
+
+
 
 this.cursors = this.input.keyboard.createCursorKeys();
 this.cameras.main.startFollow(this.player);
 
+/////add light////
+const image = this.add.image(0,0, "tint").setScale(1000);
+image.setAlpha(0.6)
+
+// this.FloorWallLayer.setPipeline("Light2D").setAlpha(0.1)
+// this.LayoutLayer.setPipeline("Light2D").setAlpha(0.1)
+// this.StallLayer.setPipeline("Light2D").setAlpha(0.1)
+// this.ItemLayer.setPipeline("Light2D").setAlpha(0.1)
+// this.DirtLayer.setPipeline("Light2D").setAlpha(0.1)
+
+// this.lights.enable();
+// this.lights.setAmbientColor(0x080808);
+// this.spotlight=this.lights.addLight(this.player.x, this.player.y).setRadius(150,150).setIntensity(5);        
 
 
  
   } /////////////////// end of create //////////////////////////////
 
   update() {
+    // this.spotlight.x=this.player.x
+    // this.spotlight.y=this.player.y
+
+
+
 
    if (this.player.x < 95 && this.player.y > 390 && this.player.y < 412) {
       console.log("Door 1")
@@ -155,6 +175,15 @@ this.cameras.main.startFollow(this.player);
     } else if (this.cursors.down.isDown) {
       this.player.body.setVelocityY(200);
       this.player.anims.play("front", true);
+
+    // } else if (this.cursors.space.isDown) { 
+    //   this.player.body.setVelocityX(0);
+    //   this.player.body.setVelocityY(0);
+    //   // this.star.disableBody(true,false)
+    //   this.player.anims.play("attack", true);
+    //   console.log("attack");
+    //   window.attack = true;
+
       //console.log('down');
     } else {
       this.player.anims.stop();
@@ -163,6 +192,10 @@ this.cameras.main.startFollow(this.player);
     }
   } /////////////////// end of update //////////////////////////////
 
+//   killmonster(star,monster){
+// console.log("hitmonster")
+
+//   }
   //Function to jump to room1
   room1(player,tile) {
     console.log("room1 function");
@@ -174,11 +207,6 @@ this.cameras.main.startFollow(this.player);
   this.scene.start("room1",{player:playerPos})
 }
 
-//////function to collect item/////
-collectBoxcutter (player, boxcutter)
-    {
-        boxcutter.disableBody(true, true);
-    }
 
 
   }

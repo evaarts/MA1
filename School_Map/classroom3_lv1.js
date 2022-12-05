@@ -20,10 +20,14 @@ class classroom3_lv1 extends Phaser.Scene {
     this.load.image("SchoolImg", "assets/tilests32x32.png");
     this.load.image("ClassroomImg", "assets/school_tileset.png");
     this.load.spritesheet('paper', 'assets/paper.png', { frameWidth: 32, frameHeight: 32 });
+    this.load.image("tint","assets/tint.jpg");
+    this.load.audio("paper", 'assets/paper.mp3');
+    this.load.spritesheet('monster', 'assets/monster.png', { frameWidth: 128, frameHeight: 64 });
     }
 
     create() {
         console.log('*** classroom3_lv1 scene');
+        this.paperSnd = this.sound.add('paper');
 
         //Step 3 - Create the map from main
         let map = this.make.tilemap({ key: "classroom3_lv1" })
@@ -41,9 +45,27 @@ class classroom3_lv1 extends Phaser.Scene {
           this.TableLayer = map.createLayer("Table",tilesArray,0,0);
           this.ChairLayer = map.createLayer("Chair",tilesArray,0,0);
 
+          
+           ////monster ani////
+           this.anims.create({
+            key: 'right_m',
+            frames: this.anims.generateFrameNumbers('monster', { start: 3, end: 5 }),
+            frameRate: 6,
+            repeat: -1
+        });
+
+                    /////////paper ANI//////////
+this.anims.create({
+  key: 'aniPaper',
+  frames: this.anims.generateFrameNumbers('paper', { start: 0, end: 1 }),
+  frameRate: 3,
+  repeat: -1
+});
+
         //Object layers
          var startPoint = map.findObject("ObjectLayer",(obj) => obj.name === "start");
 
+         this.monster = this.physics.add.sprite(151, 220, "monster").play("right_m")
          this.player = this.physics.add.sprite(startPoint.x, startPoint.y, 'Sunako').play("back")
          this.paper = this.physics.add.sprite(145, 405, "paper").play("aniPaper")
 
@@ -52,7 +74,15 @@ class classroom3_lv1 extends Phaser.Scene {
          
          window.player = this.player
 
-       
+         this.physics.add.overlap(this.player,this.monster,this.overlap,null,this)
+
+         this.time.addEvent({
+          delay: 0,
+          callback: this.moveDownUp,
+          callbackScope: this,
+          loop: false,
+       });
+     
         
         /////collider
         this.LayoutLayer.setCollisionByExclusion(-1, true)
@@ -72,6 +102,9 @@ class classroom3_lv1 extends Phaser.Scene {
          this.cursors = this.input.keyboard.createCursorKeys();
          this.cameras.main.startFollow(this.player);
 
+         const image = this.add.image(0,0, "tint").setScale(1000);
+         image.setAlpha(0.6)
+        
         
     }
 
@@ -119,7 +152,39 @@ room1(player,tile) {
       //////function to collect item/////
 collectPaper (player, paper)
 {
+  window.paper ++
+  this.paperSnd.play();
     paper.disableBody(true, true);
+}
+
+//////enemy down up/////
+moveDownUp() {
+  console.log("moveDownUp")
+  this.tweens.timeline({
+    targets: this.monster,
+    ease:"Linear",
+    loop: -1,
+    duration: 3000,
+    tweens: [
+      {
+        y:515,
+      },
+      {
+        y:220,
+      },
+    ],
+  });
+}
+
+ /////gameover////
+ overlap(){
+  console.log("monster touch player")
+  window.bgmSnd1.stop();
+  window.paper= 0
+  window.key= 0
+  this.cameras.main.shake(100)
+  this.scene.start("gameover")
+
 }
 
     

@@ -20,10 +20,14 @@ class classroom2_lv1 extends Phaser.Scene {
     this.load.image("SchoolImg", "assets/tilests32x32.png");
     this.load.image("ClassroomImg", "assets/school_tileset.png");
     this.load.spritesheet('paper', 'assets/paper.png', { frameWidth: 32, frameHeight: 32 });
+    this.load.image("tint","assets/tint.jpg");
+    this.load.audio("paper", 'assets/paper.mp3');
+    this.load.spritesheet('monster', 'assets/monster.png', { frameWidth: 128, frameHeight: 64 });
     }
 
     create() {
         console.log('*** classroom2_lv1 scene');
+        this.paperSnd = this.sound.add('paper');
 
         //Step 3 - Create the map from main
         let map = this.make.tilemap({ key: "classroom2_lv1" })
@@ -44,14 +48,39 @@ class classroom2_lv1 extends Phaser.Scene {
         //Object layers
          var startPoint = map.findObject("ObjectLayer",(obj) => obj.name === "start");
 
+            ////monster ANI/////    
+    this.anims.create({
+      key: 'left_m',
+      frames: this.anims.generateFrameNumbers('monster', { start: 3, end: 5 }),
+      frameRate: 6,
+      repeat: -1
+  });
+
+  this.anims.create({
+    key: 'right_m',
+    frames: this.anims.generateFrameNumbers('monster', { start: 3, end: 5 }),
+    frameRate: 6,
+    repeat: -1
+});
+
+         /////////paper ANI//////////
+         this.anims.create({
+          key: 'aniPaper',
+          frames: this.anims.generateFrameNumbers('paper', { start: 0, end: 1 }),
+          frameRate: 3,
+          repeat: -1
+        });
+
          this.player = this.physics.add.sprite(startPoint.x, startPoint.y, 'Sunako').play("back")
          this.paper = this.physics.add.sprite(786, 515, "paper").play("aniPaper")
+         this.monster = this.physics.add.sprite(22, 290, "monster").play("right_m")
 
          this.player.setCollideWorldBounds(true);
          this.player.body.setSize(this.player.width*0.7,this.player.height*0.9)
          
          window.player = this.player
-
+         
+         this.physics.add.overlap(this.player,this.monster,this.overlap,null,this)
        
         
         /////collider
@@ -72,10 +101,14 @@ class classroom2_lv1 extends Phaser.Scene {
          this.cursors = this.input.keyboard.createCursorKeys();
          this.cameras.main.startFollow(this.player);
 
+         const image = this.add.image(0,0, "tint").setScale(1000);
+         image.setAlpha(0.6)
         
     }
 
     update() {
+
+      this.physics.moveToObject( this.monster, this.player, 30, 4000);
 
       if (this.player.x > 902 && this.player.y > 257 && this.player.y < 287 ) {
         console.log("classroom1 exit")
@@ -118,7 +151,20 @@ room1(player,tile) {
     //////function to collect item/////
 collectPaper (player, paper)
 {
+  window.paper ++
+  this.paperSnd.play();
     paper.disableBody(true, true);
+}
+
+ /////gameover////
+ overlap(){
+  console.log("monster touch player")
+  window.bgmSnd1.stop();
+  window.paper= 0
+  window.key= 0
+  this.cameras.main.shake(100)
+  this.scene.start("gameover")
+
 }
 
     

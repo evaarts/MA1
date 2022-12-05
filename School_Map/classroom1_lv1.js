@@ -1,5 +1,6 @@
 class classroom1_lv1 extends Phaser.Scene {
 
+
     constructor() {
         super({ key: 'classroom1_lv1' });
         
@@ -20,10 +21,16 @@ class classroom1_lv1 extends Phaser.Scene {
     this.load.image("SchoolImg", "assets/tilests32x32.png");
     this.load.image("ClassroomImg", "assets/school_tileset.png");
     this.load.spritesheet('paper', 'assets/paper.png', { frameWidth: 32, frameHeight: 32 });
+    this.load.image("tint","assets/tint.jpg");
+    this.load.audio("paper", 'assets/paper.mp3');
+    this.load.spritesheet('monster', 'assets/monster.png', { frameWidth: 128, frameHeight: 64 });
+
     }
 
     create() {
         console.log('*** classroom1_lv1 scene');
+
+        this.paperSnd = this.sound.add('paper');
 
         //Step 3 - Create the map from main
         let map = this.make.tilemap({ key: "classroom1_lv1" })
@@ -41,6 +48,14 @@ class classroom1_lv1 extends Phaser.Scene {
           this.TableLayer = map.createLayer("Table",tilesArray,0,0);
           this.ChairLayer = map.createLayer("Chair",tilesArray,0,0);
 
+          ////monster ani
+          this.anims.create({
+            key: 'right_m',
+            frames: this.anims.generateFrameNumbers('monster', { start: 3, end: 5 }),
+            frameRate: 6,
+            repeat: -1
+        });
+
           /////////paper ANI//////////
 this.anims.create({
   key: 'aniPaper',
@@ -50,8 +65,11 @@ this.anims.create({
 });
 
         //Object layers
-         var startPoint = map.findObject("ObjectLayer",(obj) => obj.name === "start");
-
+        var startPoint = map.findObject("ObjectLayer",(obj) => obj.name === "start");
+        
+      
+      
+        this.monster = this.physics.add.sprite(534, 188, "monster").play("right_m")
          this.player = this.physics.add.sprite(startPoint.x, startPoint.y, 'Sunako').play("left")
          this.paper = this.physics.add.sprite(209, 268, "paper").play("aniPaper")
 
@@ -60,6 +78,15 @@ this.anims.create({
          
          window.player = this.player
 
+         this.physics.add.overlap(this.player,this.monster,this.overlap,null,this)
+
+
+         this.time.addEvent({
+            delay: 0,
+            callback: this.moveDownUp,
+            callbackScope: this,
+            loop: false,
+         });
        
         
         /////collider
@@ -77,11 +104,14 @@ this.anims.create({
         
 
 
-this.physics.add.overlap(this.player,this.paper, this.collectPaper, null, this);
+        this.physics.add.overlap(this.player,this.paper, this.collectPaper, null, this);
 
          this.cursors = this.input.keyboard.createCursorKeys();
          this.cameras.main.startFollow(this.player);
 
+        
+         const image = this.add.image(0,0, "tint").setScale(1000);
+         image.setAlpha(0.6)
         
     }
 
@@ -118,7 +148,7 @@ this.physics.add.overlap(this.player,this.paper, this.collectPaper, null, this);
 // //Function to jump back to hallway
 room1(player,tile) {
   console.log("room1 function");
-
+window.monster1=true
   let playerPos={}
   playerPos.x=285
   playerPos.y=221
@@ -128,7 +158,42 @@ room1(player,tile) {
   //////function to collect item/////
 collectPaper (player, paper)
 {
+  console.log("collect paper");
+  window.paper ++
+    this.paperSnd.play();
     paper.disableBody(true, true);
+    
+  
+}
+
+//////enemy down up/////
+moveDownUp() {
+  console.log("moveDownUp")
+  this.tweens.timeline({
+    targets: this.monster,
+    ease:"Linear",
+    loop: -1,
+    duration: 4000,
+    tweens: [
+      {
+        y:515,
+      },
+      {
+        y:188,
+      },
+    ],
+  });
+}
+
+ /////gameover////
+ overlap(){
+  console.log("monster touch player")
+  window.bgmSnd1.stop();
+  window.paper= 0
+  window.key= 0
+  this.cameras.main.shake(100)
+  this.scene.start("gameover")
+
 }
 
 

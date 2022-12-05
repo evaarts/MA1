@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="3">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="8">
  <editorsettings>
   <export target="Classroom.tmj" format="json"/>
  </editorsettings>
@@ -312,6 +312,21 @@
  </layer>
  <objectgroup id="5" name="ObjectLayer">
   <object id="1" name="start" x="832.68" y="290.21">
+   <point/>
+  </object>
+  <object id="3" name="notes1" x="240.353" y="281.281">
+   <point/>
+  </object>
+  <object id="4" name="notes2" x="814.076" y="463.592">
+   <point/>
+  </object>
+  <object id="5" name="notes3" x="146.593" y="390.667">
+   <point/>
+  </object>
+  <object id="6" name="notes4" x="413.735" y="393.644">
+   <point/>
+  </object>
+  <object id="7" name="notes5" x="575.955" y="237.377">
    <point/>
   </object>
  </objectgroup>

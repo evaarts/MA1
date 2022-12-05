@@ -24,10 +24,6 @@ class Introduction extends Phaser.Scene {
 
         console.log('*** main scene');
 
-        // Add any sound and music here
-        // ( 0 = mute to 1 is loudest )
-        //this.music = this.sound.add('bgMusic').setVolume(0.3) // 10% volume
-
         //this.music.play()
         //window.music = this.music
 
@@ -40,22 +36,18 @@ class Introduction extends Phaser.Scene {
 
         // On spacebar event, call the world scene        
         spaceDown.on('down', function () {
-            console.log('Jump to world scene');
-
-            this.scene.start('world',
-                // Optional parameters
-                {
-
-                }
-            );
+            console.log('Jump to story4 scene');
+            window.bgmSnd.stop();
+            this.scene.start('story4');
+    
         }, this);
 
 
         // Add any text in the main page
-        this.add.text(90, 850, 'Press spacebar to continue', {
-            font: '30px Courier',
-            fill: '#FFFFFF'
-        });
+        // this.add.text(90, 850, 'Press spacebar to continue', {
+        //     font: '30px Courier',
+        //     fill: '#FFFFFF'
+        // });
 
 
         // Create all the game animations here

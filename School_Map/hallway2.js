@@ -18,6 +18,7 @@ class hallway2 extends Phaser.Scene {
     this.load.tilemapTiledJSON("hallway2","assets/Corridoor1.tmj")
     // Step 2 : Preload any images here
     this.load.image("SchoolImg", "assets/tilests32x32.png");
+    this.load.image("tint","assets/tint.jpg");
 
     }
 
@@ -40,8 +41,8 @@ class hallway2 extends Phaser.Scene {
         //Object layers
          var startPoint = map.findObject("ObjectLayer",(obj) => obj.name === "start");
         
-         //this.player = this.physics.add.sprite(this.player.x, this.player.y, 'Sunako').play(this.player.facing)
-         this.player = this.physics.add.sprite(startPoint.x, startPoint.y, 'Sunako').play("front")
+         this.player = this.physics.add.sprite(this.player.x, this.player.y, 'Sunako').play(this.player.facing)
+         //this.player = this.physics.add.sprite(startPoint.x, startPoint.y, 'Sunako').play("front")
          this.player.setCollideWorldBounds(true);
          this.player.body.setSize(this.player.width*0.7,this.player.height*0.9)
          
@@ -62,6 +63,15 @@ class hallway2 extends Phaser.Scene {
          
          this.cursors = this.input.keyboard.createCursorKeys();
          this.cameras.main.startFollow(this.player);
+
+         const image = this.add.image(0,0, "tint").setScale(1000);
+image.setAlpha(0.6)
+
+  // Add text 
+  this.add.text(650,-30, 'HALLWAY 2', {
+    font: '30px Courier',
+    fill: '#FFFFFF'
+});
 
         
     }

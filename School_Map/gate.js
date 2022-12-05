@@ -2,6 +2,7 @@ class gate extends Phaser.Scene {
 
     constructor() {
         super({ key: 'gate' });
+       
         
         // Put global variable here
     }
@@ -19,6 +20,7 @@ class gate extends Phaser.Scene {
     // Step 2 : Preload any images here
     this.load.image("SchoolImg", "assets/tilests32x32.png");
     this.load.spritesheet('monster', 'assets/monster.png', { frameWidth: 128, frameHeight: 64 });
+    this.load.image("tint","assets/tint.jpg");
 
     }
 
@@ -40,10 +42,20 @@ class gate extends Phaser.Scene {
 
         //Object layers
          var startPoint = map.findObject("ObjectLayer",(obj) => obj.name === "start");
+
+
+         //mon ANI
+         this.anims.create({
+          key: 'right_m',
+          frames: this.anims.generateFrameNumbers('monster', { start: 3, end: 5 }),
+          frameRate: 6,
+          repeat: -1
+      });
+      
         
 
          this.player = this.physics.add.sprite(startPoint.x, startPoint.y, 'Sunako').play("front")
-         this.monster = this.physics.add.sprite(22, 290, "monster").play("right_m").setScale(2);
+         this.monster = this.physics.add.sprite(-100, 290, "monster").play("right_m").setScale(2);
          this.player.setCollideWorldBounds(true);
          this.player.body.setSize(this.player.width*0.7,this.player.height*0.9)
          
@@ -51,6 +63,7 @@ class gate extends Phaser.Scene {
 
         this.physics.world.bounds.width = this.FloorLayer.width
         this.physics.world.bounds.height = this.FloorLayer.height
+        this.physics.add.overlap(this.player,this.monster,this.overlap,null,this)
         
         /////collider
         this.WallLayer.setCollisionByProperty({ wall : true })
@@ -65,13 +78,21 @@ class gate extends Phaser.Scene {
          this.cursors = this.input.keyboard.createCursorKeys();
          this.cameras.main.startFollow(this.player);
 
+         const image = this.add.image(0,0, "tint").setScale(1000);
+         image.setAlpha(0.6)
         
+        // Add text 
+        this.add.text(610,-30, 'GATE', {
+            font: '30px Courier',
+            fill: '#FFFFFF'
+        });
+
     }
 
     update() {
 
       ///////enemy chase//////
-      this.physics.moveToObject( this.monster, this.player, 30, 1000);
+      this.physics.moveToObject( this.monster, this.player, 30, 5000);
 
         ////////go back to hallway2////
      if (this.player.x > 1184 && this.player.x < 1241 && this.player.y < 31 ) {
@@ -80,7 +101,7 @@ class gate extends Phaser.Scene {
    }
 
         ////////ending scene ///
-        if (this.player.x > 623 && this.player.x < 663 && this.player.y < 188 ) {
+        if (this.player.x > 623 && this.player.x < 663 && this.player.y < 188 && window.paper == 5 && window.key == 1) {
           console.log("to ending")
           this.ending();
        }
@@ -103,6 +124,14 @@ class gate extends Phaser.Scene {
             this.player.body.setVelocityY(200);
             this.player.anims.play("front", true);
             //console.log('down');
+
+          } else if (this.cursors.space.isDown) { //this.cursors.left.isDown && 
+            this.player.body.setVelocityX(0);
+            this.player.body.setVelocityY(0);
+            this.player.anims.play("attack", true);
+            console.log("attack");
+            window.attack = true;
+
           } else {
             this.player.anims.stop();
             this.player.body.setVelocity(0, 0);
@@ -122,9 +151,21 @@ class gate extends Phaser.Scene {
   /////ending/////
   ending(player,tile) {
     console.log("ending function");
+    window.bgmSnd1.stop();
     this.scene.start("ending")
+   
   
   }
-    
+
+   /////gameover////
+   overlap(){
+    console.log("monster touch player")
+    window.bgmSnd1.stop();
+    window.paper= 0
+    window.key= 0
+    this.cameras.main.shake(100)
+    this.scene.start("gameover")
+
+  }
 
 }
